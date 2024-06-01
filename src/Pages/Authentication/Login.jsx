@@ -22,7 +22,7 @@ const Login = () => {
             LOGIN
           </h1>
           <label className="block text-sm text-gray-800 dark:text-gray-200">
-            Username
+            Email
           </label>
           <input
             {...register("email")}

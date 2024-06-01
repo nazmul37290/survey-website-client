@@ -2,13 +2,66 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+import Swal from "sweetalert2";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const Register = () => {
-  const { register, handleSubmit } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const navigate = useNavigate();
+  const axiosPublic = useAxiosPublic();
+  const { createUser, updateUserProfile, logOut, signInWithGoogle } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  //   create user with email and password
+  const onSubmit = (data) => {
+    console.log(data);
+    createUser(data.email, data.password)
+      .then((result) => {
+        const user = { name: data.name, email: data.email };
+        console.log(result);
+        axiosPublic.post("/users", user).then((res) => {
+          if (res.data.insertedId) {
+            Swal.fire({
+              icon: "success",
+              title: "Success",
+              text: "Registered Successfully, login to account now ",
+            });
+          }
+        });
+        updateUserProfile(data.name, data.photoUrl).then((result) => {
+          logOut().then(() => {
+            navigate("/login");
+          });
+        });
+      })
+      .catch((error) => console.log(error));
+  };
+
+  //   create user with google
+  const handleGoogleLogin = () => {
+    signInWithGoogle()
+      .then((result) => {
+        const user = {
+          name: result.user.displayName,
+          email: result.user.email,
+        };
+        axiosPublic.put("/users", user).then((res) => {
+          console.log(res);
+        });
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <div>
       <form
@@ -24,8 +77,7 @@ const Register = () => {
           </label>
           <input
             {...register("name")}
-            type="email"
-            name="email"
+            type="text"
             className="block w-full px-4 py-2 mt-2 text-gray-700 bg-base-100 border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
           />
         </div>
@@ -35,8 +87,7 @@ const Register = () => {
           </label>
           <input
             {...register("photoUrl")}
-            type="email"
-            name="email"
+            type="text"
             className="block w-full px-4 py-2 mt-2 text-gray-700 bg-base-100 border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
           />
         </div>
@@ -45,11 +96,14 @@ const Register = () => {
             Email
           </label>
           <input
-            {...register("email")}
+            {...register("email", { required: true })}
             type="email"
             name="email"
             className="block w-full px-4 py-2 mt-2 text-gray-700 bg-base-100 border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
           />
+          {errors.email && (
+            <span className="text-red-600">email is required</span>
+          )}
         </div>
 
         <div className="mt-4 ">
@@ -68,9 +122,14 @@ const Register = () => {
             <input
               type={showPassword ? "text" : "password"}
               name="password"
-              {...register("password")}
+              {...register("password", {
+                required: true,
+
+                minLength: 6,
+              })}
               className="block w-full px-4 py-2 mt-2 text-gray-700 bg-base-100 border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
             />
+
             <div className="absolute top-1/2 -translate-y-1/2 right-3 mb-2 text-lg">
               {showPassword ? (
                 <FaEyeSlash onClick={() => setShowPassword(false)}></FaEyeSlash>
@@ -79,6 +138,9 @@ const Register = () => {
               )}
             </div>
           </div>
+          {errors.password && (
+            <span className="text-red-600">password is required</span>
+          )}
         </div>
 
         <p className="text-[#f45151]">{error}</p>
@@ -104,7 +166,7 @@ const Register = () => {
 
         <div className="flex items-center mt-6">
           <button
-            onClick={""}
+            onClick={handleGoogleLogin}
             type="button"
             className="flex items-center justify-center mx-auto w-max px-6 py-2  text-sm font-medium text-light transition-colors duration-300 transform btn rounded-lg hover:bg-light hover:text-base-100 focus:outline-none"
           >

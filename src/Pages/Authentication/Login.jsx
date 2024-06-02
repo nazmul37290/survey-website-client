@@ -2,15 +2,34 @@ import { useForm } from "react-hook-form";
 
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { FcGoogle } from "react-icons/fc";
+
+import useAuth from "../../hooks/useAuth";
+import useGoogleSignIn from "../../hooks/useGoogleSignIn";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
   const [error, setError] = useState("");
-  const onSubmit = (data) => console.log(data);
+  const { loginWithEmailandPassword } = useAuth();
+  const googleLogin = useGoogleSignIn();
+
+  //   get form data
+  const onSubmit = (data) => {
+    loginWithEmailandPassword(data.email, data.password)
+      .then((result) => {
+        console.log(result);
+        navigate("/");
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const handleGoogleLogin = () => {
+    googleLogin("/");
+  };
   return (
     <div>
       <form
@@ -84,7 +103,7 @@ const Login = () => {
 
         <div className="flex items-center mt-6">
           <button
-            onClick={""}
+            onClick={handleGoogleLogin}
             type="button"
             className="flex items-center justify-center mx-auto w-max px-6 py-2  text-sm font-medium text-light transition-colors duration-300 transform btn rounded-lg hover:bg-light hover:text-base-100 focus:outline-none"
           >

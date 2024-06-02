@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useGoogleSignIn from "../../hooks/useGoogleSignIn";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ const Register = () => {
   const { createUser, updateUserProfile, logOut, signInWithGoogle } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
+  const googleLogin = useGoogleSignIn();
   const {
     register,
     handleSubmit,
@@ -46,20 +48,7 @@ const Register = () => {
 
   //   create user with google
   const handleGoogleLogin = () => {
-    signInWithGoogle()
-      .then((result) => {
-        const user = {
-          name: result.user.displayName,
-          email: result.user.email,
-        };
-        axiosPublic.put("/users", user).then((res) => {
-          console.log(res);
-        });
-        console.log(result);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    googleLogin();
   };
 
   return (

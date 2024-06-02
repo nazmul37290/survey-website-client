@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 
 const Navbar = () => {
@@ -6,7 +6,24 @@ const Navbar = () => {
   const links = (
     <>
       <li>
-        <Link>Home</Link>
+        <NavLink
+          to={"/"}
+          className={({ isActive, isPending }) =>
+            isActive ? "underline  font-bold" : isPending ? "pending" : ""
+          }
+        >
+          Home
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to={"/surveys"}
+          className={({ isActive, isPending }) =>
+            isActive ? "underline  font-bold" : isPending ? "pending" : ""
+          }
+        >
+          Surveys
+        </NavLink>
       </li>
       {!user && (
         <Link to={"/login"} className="btn bg-white px-5">
@@ -51,7 +68,9 @@ const Navbar = () => {
           </a>
         </div>
         <div className="navbar-end hidden lg:flex">
-          <ul className="menu menu-horizontal px-1 text-second">{links}</ul>
+          <ul className=" px-4  menu-horizontal space-x-4 text-lg text-second">
+            {links}
+          </ul>
         </div>
         {user && (
           <div className="dropdown dropdown-end">

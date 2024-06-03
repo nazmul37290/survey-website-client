@@ -3,6 +3,8 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const SurveyDetails = () => {
   const { user } = useAuth();
@@ -15,6 +17,7 @@ const SurveyDetails = () => {
   const { id } = useParams();
   console.log(id);
   const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   const { data: survey } = useQuery({
     queryKey: ["surveyDetails"],
     queryFn: async () => {
@@ -27,12 +30,22 @@ const SurveyDetails = () => {
   const onSubmit = (data) => {
     console.log(data);
   };
+  const handleReport = async () => {
+    const res = await axiosSecure.post("/surveys/report", {
+      survey,
+      reportedBy: user.email,
+    });
+    if (res.data.insertedId) {
+      Swal.fire({
+        icon: "success",
+        title: "Success",
+        text: "Survey reported successfully",
+      });
+    }
+  };
   return (
-    <div>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="max-w-3xl mx-auto shadow-lg border p-10 mt-10 rounded-xl"
-      >
+    <div className="max-w-3xl mx-auto shadow-lg border p-10 mt-10 rounded-xl">
+      <form onSubmit={handleSubmit(onSubmit)}>
         <p className="font-semibold text-red-500 text-xl">
           {!user ? "You have to login for vote in survey" : ""}
         </p>
@@ -107,9 +120,11 @@ const SurveyDetails = () => {
             type="submit"
             value="Submit"
           />
-          <button className="btn mt-4 bg-red-600 text-white">Report</button>
         </div>
       </form>
+      <button onClick={handleReport} className="btn mt-4 bg-red-600 text-white">
+        Report
+      </button>
     </div>
   );
 };

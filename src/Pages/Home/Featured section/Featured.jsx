@@ -4,9 +4,9 @@ import SectionTitle from "../../../components/shared/SectionTitle";
 import useSurveys from "../../../hooks/useSurveys";
 
 const Featured = () => {
-  const [surveys] = useSurveys();
+  const [surveys, loading] = useSurveys();
 
-  const sortedSurveys = surveys.sort((a, b) => {
+  const sortedSurveys = surveys?.sort((a, b) => {
     return a.voteCount < b.voteCount ? 1 : b.voteCount < a.voteCount ? -1 : 0;
   });
   return (
@@ -20,7 +20,7 @@ const Featured = () => {
       <div className="grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {sortedSurveys.map((survey) => {
           return (
-            <Link key={survey._id}>
+            <Link to={`surveys/${survey._id}`} key={survey._id}>
               <SurveyCard item={survey}></SurveyCard>
             </Link>
           );

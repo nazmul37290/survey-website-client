@@ -13,11 +13,11 @@ const Latest = () => {
     <div>
       <SectionTitle subtitle={"Latest"} title={"Latest surveys"}></SectionTitle>
       {/* survey card container */}
-      <div className="bg-main p-10">
-        <div className="grid max-w-screen-xl mx-auto grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="bg-main">
+        <div className="grid max-w-screen-xl mx-auto py-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {sortedSurveys.map((survey) => {
             return (
-              <Link key={survey._id}>
+              <Link to={`/surveys/${survey._id}`} key={survey._id}>
                 <SurveyCard item={survey}></SurveyCard>
               </Link>
             );

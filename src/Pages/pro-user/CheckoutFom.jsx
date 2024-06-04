@@ -62,11 +62,21 @@ const CheckoutFom = () => {
       console.log("payment intent", paymentIntent);
       if (paymentIntent.status === "succeeded") {
         setTransactionId(paymentIntent.id);
+
         Swal.fire({
           icon: "success",
           title: "Success",
           text: "Your are now a pro-user",
         });
+        const payment = {
+          email: user.email,
+          payment: 20,
+          date: new Date().toLocaleDateString(),
+        };
+        console.log(payment);
+        axiosSecure
+          .patch("/payments", payment)
+          .then((res) => console.log(res.data));
       }
     }
   };

@@ -7,6 +7,7 @@ import Surveys from "../Pages/Surveys/Surveys";
 import SurveyDetails from "../Pages/Surveys/SurveyDetails";
 import ProUser from "../Pages/pro-user/ProUser";
 import Payment from "../Pages/pro-user/Payment";
+import DashboardLayout from "../Layout/DashboardLayout";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -39,6 +40,18 @@ const router = createBrowserRouter([
       {
         path: "/payment",
         element: <Payment></Payment>,
+      },
+    ],
+  },
+
+  // dashboard routes here
+  {
+    path: "/dashboard",
+    element: <DashboardLayout></DashboardLayout>,
+    children: [
+      {
+        path: "home",
+        element: <h1>what</h1>,
       },
     ],
   },

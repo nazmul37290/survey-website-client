@@ -35,8 +35,20 @@ const Navbar = () => {
           Pro-User
         </NavLink>
       </li>
+      {user && (
+        <li>
+          <NavLink
+            to={"/dashboard"}
+            className={({ isActive, isPending }) =>
+              isActive ? "underline  font-bold" : isPending ? "pending" : ""
+            }
+          >
+            Dashboard
+          </NavLink>
+        </li>
+      )}
       {!user && (
-        <Link to={"/login"} className="btn bg-white px-5">
+        <Link to={"/login"} className=" bg-white px-5">
           Sign In
         </Link>
       )}

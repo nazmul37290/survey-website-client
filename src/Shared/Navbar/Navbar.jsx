@@ -25,6 +25,16 @@ const Navbar = () => {
           Surveys
         </NavLink>
       </li>
+      <li>
+        <NavLink
+          to={"/proUser"}
+          className={({ isActive, isPending }) =>
+            isActive ? "underline  font-bold" : isPending ? "pending" : ""
+          }
+        >
+          Pro-User
+        </NavLink>
+      </li>
       {!user && (
         <Link to={"/login"} className="btn bg-white px-5">
           Sign In
@@ -80,10 +90,7 @@ const Navbar = () => {
               className="btn btn-ghost btn-circle avatar"
             >
               <div className="w-10 rounded-full">
-                <img
-                  alt="Tailwind CSS Navbar component"
-                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-                />
+                <img alt="Tailwind CSS Navbar component" src={user?.photoURL} />
               </div>
             </div>
             <ul

@@ -22,13 +22,23 @@ const SurveyDetails = () => {
     queryKey: ["surveyDetails"],
     queryFn: async () => {
       const res = await axiosPublic.get(`/surveys/${id}`);
-      console.log(res.data);
+
       return res.data;
     },
   });
 
   const onSubmit = (data) => {
-    console.log(data);
+    const response = {
+      ...survey,
+      responses: [
+        {
+          votedUserName: user.displayName,
+          votedUserEmail: user.email,
+          response: data,
+        },
+      ],
+    };
+    console.log(response);
   };
   const handleReport = async () => {
     const res = await axiosSecure.post("/surveys/report", {

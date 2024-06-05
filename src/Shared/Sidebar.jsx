@@ -137,7 +137,7 @@ const Sidebar = () => {
     <>
       <li>
         <NavLink
-          to={"/dashboard/surveyor/surveys"}
+          to={"/dashboard"}
           className={({ isActive, isPending }) =>
             isActive
               ? "bg-main block p-2 text-second font-semibold rounded-md"
@@ -188,15 +188,17 @@ const Sidebar = () => {
   return (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content flex justify-start items-center bg-main lg:bg-base-100">
+      <div className="drawer-content    lg:bg-base-100">
         {/* Page content here */}
         <label
           htmlFor="my-drawer-2"
-          className="btn  bg-transparent border-none drawer-button lg:hidden"
+          className="btn  bg-main w-full flex justify-start border-none drawer-button lg:hidden"
         >
           <GiHamburgerMenu></GiHamburgerMenu>
         </label>
-        <Outlet></Outlet>
+        <div>
+          <Outlet></Outlet>
+        </div>
       </div>
       <div className="drawer-side">
         <label
@@ -210,7 +212,9 @@ const Sidebar = () => {
             ? adminRoutes
             : role === "surveyor"
             ? surveyorRoutes
-            : userRoutes}
+            : role === "user"
+            ? userRoutes
+            : ""}
           <hr />
           <li>
             <NavLink

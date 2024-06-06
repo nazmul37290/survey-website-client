@@ -137,7 +137,7 @@ const Sidebar = () => {
     <>
       <li>
         <NavLink
-          to={"/dashboard"}
+          to={"users"}
           className={({ isActive, isPending }) =>
             isActive
               ? "bg-main block p-2 text-second font-semibold rounded-md"
@@ -148,6 +148,22 @@ const Sidebar = () => {
         >
           <span className="flex items-center gap-4 ml-14">
             <RiSurveyLine></RiSurveyLine> Users
+          </span>
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to={"adminSurveys"}
+          className={({ isActive, isPending }) =>
+            isActive
+              ? "bg-main block p-2 text-second font-semibold rounded-md"
+              : isPending
+              ? "pending"
+              : ""
+          }
+        >
+          <span className="flex items-center gap-4 ml-14">
+            <RiSurveyLine></RiSurveyLine> Surveys
           </span>
         </NavLink>
       </li>
@@ -164,22 +180,6 @@ const Sidebar = () => {
         >
           <span className="flex items-center gap-4 ml-14">
             <RiSurveyLine></RiSurveyLine> Payments
-          </span>
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          to={"/dashboard/surveyor/surveys"}
-          className={({ isActive, isPending }) =>
-            isActive
-              ? "bg-main block p-2 text-second font-semibold rounded-md"
-              : isPending
-              ? "pending"
-              : ""
-          }
-        >
-          <span className="flex items-center gap-4 ml-14">
-            <RiSurveyLine></RiSurveyLine> Surveys
           </span>
         </NavLink>
       </li>
@@ -212,7 +212,7 @@ const Sidebar = () => {
             ? adminRoutes
             : role === "surveyor"
             ? surveyorRoutes
-            : role === "user"
+            : role === "user" || role === "pro-user"
             ? userRoutes
             : ""}
           <hr />

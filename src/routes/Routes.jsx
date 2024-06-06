@@ -9,6 +9,7 @@ import ProUser from "../Pages/pro-user/ProUser";
 import Payment from "../Pages/pro-user/Payment";
 import DashboardLayout from "../Layout/DashboardLayout";
 import Users from "../Pages/Admin/Users";
+import AdminSurveys from "../Pages/Admin/AdminSurveys";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -50,9 +51,15 @@ const router = createBrowserRouter([
     path: "/dashboard",
     element: <DashboardLayout></DashboardLayout>,
     children: [
+      // admin routes
       {
-        path: "/dashboard",
+        path: "users",
         element: <Users></Users>,
+      },
+
+      {
+        path: "adminSurveys",
+        element: <AdminSurveys></AdminSurveys>,
       },
     ],
   },

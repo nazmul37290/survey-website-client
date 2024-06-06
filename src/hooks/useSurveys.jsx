@@ -3,7 +3,11 @@ import useAxiosPublic from "./useAxiosPublic";
 const useSurveys = () => {
   const axiosPublic = useAxiosPublic();
 
-  const { data: surveys = [], isPending } = useQuery({
+  const {
+    data: surveys = [],
+    isPending,
+    refetch,
+  } = useQuery({
     queryKey: ["surveys"],
     queryFn: async () => {
       const res = await axiosPublic.get("/surveys");
@@ -12,7 +16,7 @@ const useSurveys = () => {
   });
 
   // if (isPending) return "Loading...";
-  return [surveys, isPending];
+  return [surveys, isPending, refetch];
 };
 
 export default useSurveys;

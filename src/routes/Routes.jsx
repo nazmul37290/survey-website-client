@@ -10,6 +10,7 @@ import Payment from "../Pages/pro-user/Payment";
 import DashboardLayout from "../Layout/DashboardLayout";
 import Users from "../Pages/Admin/Users";
 import AdminSurveys from "../Pages/Admin/AdminSurveys";
+import AllPayments from "../Pages/Admin/AllPayments";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
       {
         path: "adminSurveys",
         element: <AdminSurveys></AdminSurveys>,
+      },
+      {
+        path: "adminPayments",
+        element: <AllPayments></AllPayments>,
       },
     ],
   },

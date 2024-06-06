@@ -169,7 +169,7 @@ const Sidebar = () => {
       </li>
       <li>
         <NavLink
-          to={"/dashboard/surveyor/surveys"}
+          to={"/dashboard/adminPayments"}
           className={({ isActive, isPending }) =>
             isActive
               ? "bg-main block p-2 text-second font-semibold rounded-md"
@@ -214,7 +214,7 @@ const Sidebar = () => {
             ? surveyorRoutes
             : role === "user" || role === "pro-user"
             ? userRoutes
-            : ""}
+            : "Loading...."}
           <hr />
           <li>
             <NavLink

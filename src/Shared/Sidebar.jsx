@@ -84,7 +84,7 @@ const Sidebar = () => {
     <>
       <li>
         <NavLink
-          to={"/dashboard/surveyor/surveys"}
+          to={"/dashboard/userSurveys"}
           className={({ isActive, isPending }) =>
             isActive
               ? "bg-main block p-2 text-second font-semibold rounded-md"
@@ -100,7 +100,7 @@ const Sidebar = () => {
       </li>
       <li>
         <NavLink
-          to={"/dashboard/surveyor/create"}
+          to={"/dashboard/comments"}
           className={({ isActive, isPending }) =>
             isActive
               ? "bg-main block p-2 text-second font-semibold rounded-md"

@@ -5,8 +5,10 @@ import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import useRole from "../../hooks/useRole";
 
 const SurveyDetails = () => {
+  const [role] = useRole();
   const { user } = useAuth();
   const {
     register,
@@ -39,6 +41,10 @@ const SurveyDetails = () => {
       ],
     };
     console.log(response);
+
+    axiosSecure.put("/surveys/response", response).then((res) => {
+      console.log(res.data);
+    });
   };
   const handleReport = async () => {
     const res = await axiosSecure.post("/surveys/report", {
@@ -114,14 +120,20 @@ const SurveyDetails = () => {
             </div>
           );
         })}
-        <label className="font-medium ml-2">Add Comment</label>
-        <br />
-        <textarea
-          name="comment"
-          className="border w-full rounded-lg p-2 mt-2 "
-          placeholder="add your comment"
-          id=""
-        ></textarea>
+        {role === "pro-user" && (
+          <>
+            <label className="font-medium ml-2">Add Comment</label>
+            <br />
+            <textarea
+              name="comment"
+              {...register("comment")}
+              className="border w-full rounded-lg p-2 mt-2 "
+              placeholder="add your comment"
+              id=""
+            ></textarea>
+          </>
+        )}
+
         <p className="text-[#f45151]">{}</p>
         <div className=" flex gap-4">
           <input

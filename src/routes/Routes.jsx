@@ -12,6 +12,7 @@ import Users from "../Pages/Admin/Users";
 import AdminSurveys from "../Pages/Admin/AdminSurveys";
 import AllPayments from "../Pages/Admin/AllPayments";
 import UserReportSurvey from "../Pages/userDashboard/UserReportSurvey";
+import UserSurveys from "../Pages/userDashboard/UserSurveys";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -72,6 +73,10 @@ const router = createBrowserRouter([
       {
         path: "reports",
         element: <UserReportSurvey></UserReportSurvey>,
+      },
+      {
+        path: "userSurveys",
+        element: <UserSurveys></UserSurveys>,
       },
     ],
   },

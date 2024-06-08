@@ -1,21 +1,9 @@
 import SectionTitle from "../../components/shared/SectionTitle";
-import useAuth from "../../hooks/useAuth";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
-import { useQuery } from "@tanstack/react-query";
+
+import useParticipatedSurveys from "../../hooks/useParticipatedSurveys";
 
 const UserSurveys = () => {
-  const { user } = useAuth();
-  const axiosSecure = useAxiosSecure();
-  const { data: surveys = [], refetch } = useQuery({
-    queryKey: ["participatedSurveys"],
-    queryFn: async () => {
-      const res = await axiosSecure.get(
-        `/surveys/user/participated?email=${user?.email}`
-      );
-      console.log(res.data);
-      return res.data;
-    },
-  });
+  const [surveys] = useParticipatedSurveys();
   return (
     <div>
       <SectionTitle

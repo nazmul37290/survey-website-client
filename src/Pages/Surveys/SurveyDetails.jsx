@@ -1,6 +1,6 @@
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
@@ -16,6 +16,7 @@ const SurveyDetails = () => {
 
     formState: { errors },
   } = useForm();
+  const navigate = useNavigate();
   const { id } = useParams();
   console.log(id);
   const axiosPublic = useAxiosPublic();
@@ -44,6 +45,14 @@ const SurveyDetails = () => {
 
     axiosSecure.put("/surveys/response", response).then((res) => {
       console.log(res.data);
+      if (res.data.modifiedCount || res.data.upsertedCount) {
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: "Survey response added successfully",
+        });
+        navigate("/surveys");
+      }
     });
   };
   const handleReport = async () => {

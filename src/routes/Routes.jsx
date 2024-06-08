@@ -13,6 +13,8 @@ import AdminSurveys from "../Pages/Admin/AdminSurveys";
 import AllPayments from "../Pages/Admin/AllPayments";
 import UserReportSurvey from "../Pages/userDashboard/UserReportSurvey";
 import UserSurveys from "../Pages/userDashboard/UserSurveys";
+import Comments from "../Pages/userDashboard/Comments";
+import CreateSurvey from "../Pages/Surveyor/CreateSurvey";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -77,6 +79,16 @@ const router = createBrowserRouter([
       {
         path: "userSurveys",
         element: <UserSurveys></UserSurveys>,
+      },
+      {
+        path: "comments",
+        element: <Comments></Comments>,
+      },
+
+      // surveyor routes
+      {
+        path: "/dashboard/surveyor/create",
+        element: <CreateSurvey></CreateSurvey>,
       },
     ],
   },

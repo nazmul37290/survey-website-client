@@ -116,7 +116,7 @@ const Sidebar = () => {
       </li>
       <li>
         <NavLink
-          to={"/dashboard/surveyor/surveys"}
+          to={"/dashboard/reports"}
           className={({ isActive, isPending }) =>
             isActive
               ? "bg-main block p-2 text-second font-semibold rounded-md"

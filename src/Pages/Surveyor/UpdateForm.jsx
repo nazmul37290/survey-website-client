@@ -5,14 +5,16 @@ import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-import Swal from "sweetalert2";
-
-const CreateSurvey = () => {
+import { useQuery } from "@tanstack/react-query";
+import { useParams } from "react-router-dom";
+const UpdateForm = () => {
   const [deadline, setDeadline] = useState(new Date());
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const { register, handleSubmit } = useForm();
   const [questions, setQuestions] = useState([]);
+  const { id } = useParams();
+  console.log(id);
   const handleQuestion = () => {
     let title = document.getElementById("questionTitle")?.value;
     let description = document.getElementById("questionDescription")?.value;
@@ -21,31 +23,31 @@ const CreateSurvey = () => {
     setQuestions([...questions, question]);
   };
 
+  const {
+    data: survey = [],
+    isPending,
+    refetch,
+  } = useQuery({
+    queryKey: ["updateSurvey"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/surveys/${id}`);
+      return res.data;
+    },
+  });
+  console.log(survey);
   const onSubmit = (data) => {
     console.log(data);
-    const survey = { ...data, deadline, questions: [...questions] };
-    console.log(survey);
-    axiosSecure.post("/surveys", survey).then((res) => {
-      console.log(res);
-      if (res.data.insertedId) {
-        Swal.fire({
-          title: "success",
-          icon: "success",
-        });
-      }
-    });
+    const newData = { ...data, deadline, questions: [...questions] };
+    console.log(newData);
   };
   return (
     <div>
-      <SectionTitle
-        title={"Create Survey"}
-        subtitle={"Surveyor"}
-      ></SectionTitle>
       <div className="max-w-screen-xl border  p-5 mx-auto">
         <form onSubmit={handleSubmit(onSubmit)}>
           <label className="font-bold">Title:</label>
           <br />
           <input
+            defaultValue={survey.title}
             className="p-2 border w-2/3  border-main rounded-lg"
             {...register("title")}
           />
@@ -53,6 +55,7 @@ const CreateSurvey = () => {
           <label className="font-bold">Description:</label>
           <br />
           <input
+            defaultValue={survey.description}
             className="p-2 border w-2/3  border-main rounded-lg"
             {...register("description")}
           />
@@ -72,6 +75,7 @@ const CreateSurvey = () => {
             <label className="font-bold">Category</label>
             <br />
             <select
+              defaultValue={survey.category}
               {...register("category")}
               name="filterCategory"
               className="p-2 border  border-main rounded-lg"
@@ -103,6 +107,7 @@ const CreateSurvey = () => {
             <label className="font-bold">Deadline:</label>
             <br />
             <DatePicker
+              defaultValue={survey.deadline}
               className="p-2 border border-main"
               selected={deadline}
               onChange={(date) => setDeadline(date.toLocaleDateString("ja-JP"))}
@@ -112,7 +117,31 @@ const CreateSurvey = () => {
           <hr />
           <div>
             <h2 className="font-bold my-3">Create questions</h2>
-            {questions.map((question, i) => {
+            {survey?.questions?.map((question, i) => {
+              return (
+                <div className="my-3" key={i}>
+                  <p className="mb-2">Question {i + 1}</p>
+
+                  <label className="font-medium">Title</label>
+
+                  <input
+                    className="p-2 border  text-black border-main rounded-lg"
+                    type="text"
+                    id={`oldQuestionTitle${i + 1}`}
+                    defaultValue={question?.title}
+                  />
+
+                  <label className="font-medium">Description</label>
+
+                  <input
+                    className="p-2 border  text-black border-main rounded-lg"
+                    type="text"
+                    defaultValue={question?.description}
+                  />
+                </div>
+              );
+            })}
+            {questions?.map((question, i) => {
               return (
                 <div key={i} className=" flex gap-5">
                   <p>{i + 1}</p>
@@ -159,4 +188,4 @@ const CreateSurvey = () => {
   );
 };
 
-export default CreateSurvey;
+export default UpdateForm;

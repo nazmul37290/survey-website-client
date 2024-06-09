@@ -15,6 +15,10 @@ import UserReportSurvey from "../Pages/userDashboard/UserReportSurvey";
 import UserSurveys from "../Pages/userDashboard/UserSurveys";
 import Comments from "../Pages/userDashboard/Comments";
 import CreateSurvey from "../Pages/Surveyor/CreateSurvey";
+import UpdatePage from "../Pages/Surveyor/UpdatePage";
+import UpdateForm from "../Pages/Surveyor/UpdateForm";
+import SurveyResponses from "../Pages/Surveyor/SurveyResponses";
+import SurveyResponseDetails from "../Pages/Surveyor/SurveyResponseDetails";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -89,6 +93,22 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/surveyor/create",
         element: <CreateSurvey></CreateSurvey>,
+      },
+      {
+        path: "/dashboard/surveyor/update",
+        element: <UpdatePage></UpdatePage>,
+      },
+      {
+        path: `/dashboard/update/:id`,
+        element: <UpdateForm></UpdateForm>,
+      },
+      {
+        path: `/dashboard/surveyor/surveys`,
+        element: <SurveyResponses></SurveyResponses>,
+      },
+      {
+        path: `/dashboard/surveyResponses/:id`,
+        element: <SurveyResponseDetails></SurveyResponseDetails>,
       },
     ],
   },

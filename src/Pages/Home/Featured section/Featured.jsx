@@ -18,7 +18,7 @@ const Featured = () => {
 
       {/* survey card container */}
       <div className="grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {sortedSurveys.map((survey) => {
+        {sortedSurveys?.slice(0, 6).map((survey) => {
           return (
             <Link to={`surveys/${survey._id}`} key={survey._id}>
               <SurveyCard item={survey}></SurveyCard>

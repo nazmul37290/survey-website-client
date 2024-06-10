@@ -19,6 +19,8 @@ import UpdatePage from "../Pages/Surveyor/UpdatePage";
 import UpdateForm from "../Pages/Surveyor/UpdateForm";
 import SurveyResponses from "../Pages/Surveyor/SurveyResponses";
 import SurveyResponseDetails from "../Pages/Surveyor/SurveyResponseDetails";
+import AdminRoutes from "./AdminRoutes";
+import SurveyorRoutes from "./SurveyorRoutes";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -63,16 +65,28 @@ const router = createBrowserRouter([
       // admin routes
       {
         path: "users",
-        element: <Users></Users>,
+        element: (
+          <AdminRoutes>
+            <Users></Users>
+          </AdminRoutes>
+        ),
       },
 
       {
         path: "adminSurveys",
-        element: <AdminSurveys></AdminSurveys>,
+        element: (
+          <AdminRoutes>
+            <AdminSurveys></AdminSurveys>
+          </AdminRoutes>
+        ),
       },
       {
         path: "adminPayments",
-        element: <AllPayments></AllPayments>,
+        element: (
+          <AdminRoutes>
+            <AllPayments></AllPayments>
+          </AdminRoutes>
+        ),
       },
 
       // user routes
@@ -92,23 +106,43 @@ const router = createBrowserRouter([
       // surveyor routes
       {
         path: "/dashboard/surveyor/create",
-        element: <CreateSurvey></CreateSurvey>,
+        element: (
+          <SurveyorRoutes>
+            <CreateSurvey></CreateSurvey>,
+          </SurveyorRoutes>
+        ),
       },
       {
         path: "/dashboard/surveyor/update",
-        element: <UpdatePage></UpdatePage>,
+        element: (
+          <SurveyorRoutes>
+            <UpdatePage></UpdatePage>,
+          </SurveyorRoutes>
+        ),
       },
       {
         path: `/dashboard/update/:id`,
-        element: <UpdateForm></UpdateForm>,
+        element: (
+          <SurveyorRoutes>
+            <UpdateForm></UpdateForm>,
+          </SurveyorRoutes>
+        ),
       },
       {
         path: `/dashboard/surveyor/surveys`,
-        element: <SurveyResponses></SurveyResponses>,
+        element: (
+          <SurveyorRoutes>
+            <SurveyResponses></SurveyResponses>,
+          </SurveyorRoutes>
+        ),
       },
       {
         path: `/dashboard/surveyResponses/:id`,
-        element: <SurveyResponseDetails></SurveyResponseDetails>,
+        element: (
+          <SurveyorRoutes>
+            <SurveyResponseDetails></SurveyResponseDetails>,
+          </SurveyorRoutes>
+        ),
       },
     ],
   },

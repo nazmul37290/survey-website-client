@@ -58,7 +58,7 @@ const SurveyDetails = () => {
   const handleReport = async () => {
     const res = await axiosSecure.post("/surveys/report", {
       survey,
-      reportedBy: user.email,
+      reportedBy: user?.email,
     });
     if (res.data.insertedId) {
       Swal.fire({
@@ -97,8 +97,8 @@ const SurveyDetails = () => {
               key={questionNumber}
               className="shadow-sm p-5 space-y-3 rounded-lg my-3 border border-main"
             >
-              <h1 className="font-bold text-lg">{question.title}</h1>
-              <p>{question.description}</p>
+              <h1 className="font-bold text-lg">{question?.title}</h1>
+              <p>{question?.description}</p>
               <div>
                 {question.options.map((option, i) => {
                   return (
@@ -153,7 +153,11 @@ const SurveyDetails = () => {
           />
         </div>
       </form>
-      <button onClick={handleReport} className="btn mt-4 bg-red-600 text-white">
+      <button
+        onClick={handleReport}
+        disabled={!user}
+        className="btn mt-4 bg-red-600 text-white"
+      >
         Report
       </button>
     </div>

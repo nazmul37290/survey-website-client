@@ -6,7 +6,7 @@ import SurveyCard from "../../../components/SurveyCard";
 const Latest = () => {
   const [surveys] = useSurveys();
 
-  const sortedSurveys = surveys.sort((a, b) => {
+  const sortedSurveys = surveys?.sort((a, b) => {
     return a.timestamp < b.timestamp ? 1 : b.timestamp < a.timestamp ? -1 : 0;
   });
   return (

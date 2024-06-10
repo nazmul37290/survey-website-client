@@ -21,6 +21,7 @@ import SurveyResponses from "../Pages/Surveyor/SurveyResponses";
 import SurveyResponseDetails from "../Pages/Surveyor/SurveyResponseDetails";
 import AdminRoutes from "./AdminRoutes";
 import SurveyorRoutes from "./SurveyorRoutes";
+import Feedback from "../Pages/Surveyor/Feedback";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -125,6 +126,14 @@ const router = createBrowserRouter([
         element: (
           <SurveyorRoutes>
             <UpdateForm></UpdateForm>,
+          </SurveyorRoutes>
+        ),
+      },
+      {
+        path: `/dashboard/surveyor/feedbacks`,
+        element: (
+          <SurveyorRoutes>
+            <Feedback></Feedback>,
           </SurveyorRoutes>
         ),
       },

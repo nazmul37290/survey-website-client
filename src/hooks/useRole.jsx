@@ -1,17 +1,20 @@
 import { useEffect, useState } from "react";
 import useAuth from "./useAuth";
-import useAxiosSecure from "./useAxiosSecure";
+
+import useAxiosPublic from "./useAxiosPublic";
 
 const useRole = () => {
   const { user } = useAuth();
   const [role, setRole] = useState("");
-  const axiosSecure = useAxiosSecure();
+  const [loader, setLoader] = useState(true);
+  const axiosPublic = useAxiosPublic();
   useEffect(() => {
-    axiosSecure.post("/checkRole", { email: user?.email }).then((res) => {
+    axiosPublic.post("/checkRole", { email: user?.email }).then((res) => {
       setRole(res.data.role);
+      setLoader(false);
     });
-  }, [axiosSecure, user?.email]);
-  return [role];
+  }, [axiosPublic, user?.email]);
+  return [role, loader];
 };
 
 export default useRole;

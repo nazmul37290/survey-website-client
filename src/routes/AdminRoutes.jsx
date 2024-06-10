@@ -1,14 +1,23 @@
+import useAuth from "../hooks/useAuth";
 import useRole from "../hooks/useRole";
-import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 const AdminRoutes = ({ children }) => {
-  const [role] = useRole();
-  const navigate = useNavigate();
+  const { user, loading } = useAuth();
+  const [role, loader] = useRole();
 
-  if (role === "admin") {
-    return children;
+  if (loading) {
+    return <span className="loading loading-dots loading-lg"></span>;
+  }
+  if (user) {
+    if (loader) {
+      return <span className="loading loading-dots loading-lg"></span>;
+    }
+    if (role === "admin") {
+      return children;
+    }
   } else {
-    navigate("/");
+    return <Navigate to={"/"}></Navigate>;
   }
 };
 

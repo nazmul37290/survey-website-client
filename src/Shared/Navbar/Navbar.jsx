@@ -95,7 +95,7 @@ const Navbar = () => {
           </ul>
         </div>
         {user && (
-          <div className="dropdown dropdown-end">
+          <div className="dropdown ml-auto md:ml-0  dropdown-end">
             <div
               tabIndex={0}
               role="button"

@@ -2,15 +2,15 @@ import bannerBg from "../../assets/Images/banner-bg.jpg";
 const Banner = () => {
   return (
     <div
-      className="hero h-[650px]"
+      className="hero  h-[650px]"
       style={{
         backgroundImage: `url(${bannerBg})`,
       }}
     >
-      <div className="hero-overlay bg-opacity-80"></div>
+      <div className="hero-overlay  bg-opacity-80"></div>
       <div className="hero-content text-center text-white">
-        <div className="max-w-2xl">
-          <h1 className="mb-5 text-5xl font-bold">
+        <div className="max-w-[250px] lg:max-w-2xl">
+          <h1 className="mb-5 text-3xl lg:text-5xl font-bold">
             Welcome to <span className="text-main">SurveyStream</span>
           </h1>
           <p className="mb-5">

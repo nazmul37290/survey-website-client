@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const axiosSecure = axios.create({
-  // baseURL: "https://survey-app-server-iota.vercel.app",
-  baseURL: "http://localhost:4000",
+  baseURL: "https://survey-app-server-iota.vercel.app",
+  // baseURL: "http://localhost:4000",
 });
 
 const useAxiosSecure = () => {

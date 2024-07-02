@@ -17,3 +17,9 @@ Admin Password: nazmul12
 - Admin Control
 - Display Survey Responses depending on user
 - Secured Api
+
+## How to run this repo locally
+
+- install node js 
+- add this command to project folder "npm i"
+- then add another command "npm run dev"
